@@ -1,2 +1,2 @@
 # iSTATS
-A package to analize nmr data.
+A package developed in R using shiny dashbord, iSTATS have a GUI platform to analize nmr data.
