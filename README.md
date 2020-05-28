@@ -6,7 +6,15 @@ A package developed in R using shiny dashbord, iSTATS (interactive STAtisTical S
 There are 2 ways to install iSTATS, fisrt one is on CRAN (The Comprehensive R Archive Network) and another is from here github.
 
 ### install iSTATS from CRAN 
-You can install by R with command `install.packages()` or you can use RStudio tool as in the figure below:
+You can install by R with command `install.packages('iSTATS')` or you can use RStudio tool as in the figure below:
 
 
 ![Alt ou título da imagem](https://github.com/vitor-mendes-iq/iSTATS/blob/master/rstudio_install.jpg)
+
+
+### install iSTATS from Github
+first install devtools package with command `install.packages("devtools")`
+after install, `library(devtools)` do command `install_github("vitor-mendes-iq/iSTATS")`
+
+
+After install iSTATS loading package with `library(iSTATS)` and `iSTATS()` they will open in a standart browser.
