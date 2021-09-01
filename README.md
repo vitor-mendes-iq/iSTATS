@@ -28,4 +28,4 @@ The first menu that we should use is **DATA**, where are four sections, one data
 #### Import CSV file
 In this section we need first define the range of spectra that we need to analize (default is 0 - 10 ppm) them on the botton of **Choose CSV Files**  we can click in browse and choose the CSV file that need to have ppm separete by virgula to intenssity signal, like show in **figure 2**
 
-![Alt ou título da imagem](https://github.com/vitor-mendes-iq/iSTATS/blob/master/rstudio_install.jpg)
+![Alt ou título da imagem](https://github.com/vitor-mendes-iq/iSTATS/blob/master/import_csv.PNG)
