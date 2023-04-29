@@ -1,4 +1,7 @@
 
+# a fazer: ler primeira linha da matriz de regions e colocar estas areas no menu select
+
+
 observeEvent(input$file2, {
 
   buma <<- 0
@@ -6,6 +9,7 @@ observeEvent(input$file2, {
   if(is.null(input$file2))  return(NULL)
 
   up2 <<-input$file2
+  print(up2)
 
   if (length(up2$name) < 2) {
 
@@ -41,7 +45,8 @@ observeEvent(input$file2, {
 
     file_names_full <<- up2$name
 
-    file_names <<- substr(basename(file_names_full),1, nchar(basename(file_names_full))-4)
+    #file_names <<- substr(basename(file_names_full),1, nchar(basename(file_names_full))-4)
+    file_names <<- file_names_full
 
     file_names_full <<- gtools::mixedsort(file_names_full)
 
@@ -90,89 +95,25 @@ observeEvent(input$file2, {
 
     updateSelectInput(session, "spectrum_list_stocsy_rt", choices = file_names[])
 
-    updateTabsetPanel(session, "main_bar", "Plot Spectra")
+    #updateTabsetPanel(session, "main_bar", "Plot Spectra")
 
   }
 
 })
 
+# regions_selected_input
+observeEvent(input$file_regions, {
+  data_path_regions <<- input$file_regions
+  dataset <- read.csv(data_path_regions$datapath)
+  regions_sel <<- colnames(dataset)
+})
 
-# observeEvent(input$import1,{
-#
-#   X <- rstudioapi::selectDirectory(caption = "Select the directory that contains the CSV files")
-#
-#   if(!is.null(X)) {
-#
-#     setwd(X)
-#
-#     ext="\\.(csv|CSV)$"
-#
-#     FilesX <- list.files(pattern = ext)
-#
-#     if(length(FilesX)>2) {
-#
-#       upfile1 <<- lapply(FilesX, function(x) data.table::fread(x, header = FALSE, sep = ",",data.table=FALSE) )
-#
-#       lslim = as.numeric(input$ls_lims)
-#
-#       hslim = as.numeric(input$hs_lims)
-#
-#       file_names_full <<- FilesX
-#
-#       file_names <<- substr(basename(file_names_full),1, nchar(basename(file_names_full))-4)
-#
-#       file_names_full <<- gtools::mixedsort(file_names_full)
-#
-#       file_names <<- gtools::mixedsort(file_names)
-#
-#       list_len <- length(upfile1)
-#
-#       CS_values <<- unlist((upfile1[[1]][1]),use.names = FALSE, recursive = FALSE)
-#
-#       NMRData_temp <<- t(lapply(upfile1, function(k) k[,2]))
-#
-#       hspoint <- which(abs(CS_values-lslim)==min(abs(CS_values-lslim)))[1]
-#
-#       lspoint <- which(abs(CS_values-hslim)==min(abs(CS_values-hslim)))[1]
-#
-#       npf = hspoint - lspoint
-#
-#       np = npf + 1
-#
-#       CS_values_temp <- lapply(upfile1, function(k) k[,1])
-#
-#       hspoint <- sapply(CS_values_temp, function (v) which(abs(v-lslim)==min(abs(v-lslim)))[1])
-#
-#       CS_ind <- which.min(abs(mapply(function(x,y) x[hspoint[y]],CS_values_temp, 1:list_len)))
-#
-#       CS_values <<- CS_values_temp[[CS_ind]][(hspoint[CS_ind]-npf):hspoint[CS_ind]]
-#
-#       NMRData <<- t(mapply(function(x,y) x[(hspoint[y]-npf):hspoint[y]],NMRData_temp, 1:list_len))
-#
-#       CS_values_real <<- rbind(CS_values,CS_values)
-#
-#       NMRData <<- NMRData + abs(min(NMRData))
-#
-#
-#       refreshval()
-#
-#       updateSelectInput(session, "spectrum_list_multi", choices = file_names[])
-#
-#       updateSelectInput(session, "spectrum_list_stocsy_i", choices = file_names[])
-#
-#       updateSelectInput(session, "spectrum_list_stocsy_is", choices = file_names[])
-#
-#       updateSelectInput(session, "spectrum_list_stocsy_rt", choices = file_names[])
-#
-#       updateTabsetPanel(session, "main_bar", "Plot Spectra")
-#
-#     }
-#
-#   }
-#
-# }  )
+# import botton
+observeEvent(input$import, {
+  updateTabsetPanel(session, "main_bar", "Plot Spectra")
+})
 
-
+# UI
 output$imputa2 <- renderUI({
 
   tagList(
@@ -215,6 +156,22 @@ output$imputa2 <- renderUI({
 
                                  column(5)
 
+                        ),
+                        # import seleted regions
+                        fluidRow(align = "center",
+                                 
+                                 fluidRow(div(style="height:30px")),
+                                 
+                                 fileInput("file_regions", "Choose your selected regions/areas",
+                                           multiple = TRUE,
+                                           accept = c("text/csv",
+                                                      "text/comma-separated-values,
+                                                       text/plain",".csv",".CSV")
+                                 )),
+                        # start import
+                        fluidRow(align = "center",
+                                 fluidRow(div(style="height:30px")),
+                                 actionButton("import", "import data")
                         ),
 
 

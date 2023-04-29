@@ -1,4 +1,6 @@
-  # Variables
+# olhar col_sel 
+
+ # Variables
   NMRData_Mean <- colMeans(NMRData_plot[,])
   col_select <<- c()
   alr_click <<- 0
@@ -160,6 +162,7 @@
         matr_cor <<- matrix(data = NMRData[,col_select],dim(NMRData)[1], length(CS_sel_real))
         colnames(matr_cor) <<- CS_sel_real
         write.table(matr_cor, file,sep = ",",col.names = TRUE,row.names = FALSE)
+        write.table(col_select,file, sep = ",",col.names = FALSE,row.names = FALSE)
       }
   )
 
@@ -402,6 +405,7 @@
           dyn_brush <- c(brush$xmin,brush$xmax)
           reg_selec <<- rbind(reg_selec, dyn_brush)
           col_select <<- c(col_select, col_select_2)
+          print(col_select)
           matr_selec <<- cbind(matr_selec,rowSums(matrix(data = NMRData[,llim:hlim],dim(NMRData)[1], length(col_select_2))))
           }
 
@@ -504,7 +508,7 @@
       }
     })
 
-    # Delect region
+    # Delete region
     observeEvent(input$exc_reg, {
         if (!(sel_ind == 0)) {
         alr_click <<- 1
