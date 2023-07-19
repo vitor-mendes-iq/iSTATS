@@ -45,8 +45,8 @@ observeEvent(input$file2, {
 
     file_names_full <<- up2$name
 
-    #file_names <<- substr(basename(file_names_full),1, nchar(basename(file_names_full))-4)
-    file_names <<- file_names_full
+    file_names <<- substr(basename(file_names_full),1, nchar(basename(file_names_full))-4)
+    #file_names <<- file_names_full
 
     file_names_full <<- gtools::mixedsort(file_names_full)
 
