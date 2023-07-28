@@ -1,7 +1,7 @@
  shinyServer(function(input, output, session) {
 
    options(shiny.maxRequestSize=100*1024^2)
-
+   source('global.R', local = T)
    source('functions.R', local = T)
    source('uploader_server.R', local = T)
    source('uploader_server_CSV.R', local = T)

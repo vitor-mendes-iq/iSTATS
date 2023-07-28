@@ -1,0 +1,8 @@
+Olhar onde esta o click, e transformar reg em matriz
+olhar a logica do pos_map 
+
+# atualmente travado na logica do pos_map (resolvido)
+# Atualmente travado no "cut_all"(resolvido) 
+# entender a logica dos if da linha 531 -560
+e o pq não atualiza a exclucao de colunas no plot
+

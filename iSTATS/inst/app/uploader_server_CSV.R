@@ -1,6 +1,6 @@
 
 # a fazer: ler primeira linha da matriz de regions e colocar estas areas no menu select
-
+regions_sel <<-c()
 
 observeEvent(input$file2, {
 
@@ -103,9 +103,12 @@ observeEvent(input$file2, {
 
 # regions_selected_input
 observeEvent(input$file_regions, {
-  data_path_regions <<- input$file_regions
-  dataset <- read.csv(data_path_regions$datapath)
-  regions_sel <<- colnames(dataset)
+  data_path_regions <- input$file_regions
+  dataset <- read.csv(data_path_regions$datapath, header = FALSE)
+  reg_selec_old <<- dataset
+  #regions_sel <<- t(dataset)
+  old_sel <<- 1
+  sel_ind <<- 1
 })
 
 # import botton
