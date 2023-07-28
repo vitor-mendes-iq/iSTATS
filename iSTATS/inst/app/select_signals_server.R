@@ -381,12 +381,14 @@
           pos_low <- which(col_select_old==llim)
           pos_high <- which(col_select_old==hlim)
           pos_map <<- rbind(pos_map, matrix(c(pos_low,pos_high), 1, 2))
+          sel_ind <<- sel_ind + 1
         }
         pos_map <<- pos_map[-c(1),]
         col_select <<- col_select_old
         CS_selection$vranges_t <<- CS_values_real[1,col_select]
         print(pos_map)
         matr_selec <<- rowSums(matrix(data = NMRData[,llim:hlim],dim(NMRData)[1], length(CS_selection$vranges_t)))
+        old_sel <<- 0
       }
       else{
         col_select_old <<- c()
@@ -526,34 +528,34 @@
              CS_selection$vranges_t <<- CS_values_real[1,col_select]
              #CS_selection$vranges_t <<- CS_selection$vranges_t[-c(cut_all)]
              print(length(CS_selection$vranges_t))  
-             #if (row_reg == 1) {
-             #pos_delta <<- as.integer(pos_map[1,2] - pos_map[1,1] + 1)
+             if (row_reg == 1) {
+             pos_delta <<- as.integer(pos_map[1,2] - pos_map[1,1] + 1)
+
+             if (sel_ind == 2) {
+               pos_map_temp <<- matrix(pos_map[-1,], 1, 2)
+             }
+
+             else {
+               pos_map_temp <<- pos_map[-1,]
+             }
+             pos_map <<- (pos_map_temp - pos_delta)
+             }
+
+             if (row_reg == 2) {
+               pos_delta <- (pos_map[2,2] - pos_map[2,1] + 1)
+               pos_map_temp <- pos_map[-c(1,2),] - pos_delta
+               pos_map <<- rbind(pos_map, pos_map_temp)
+             }
 #
-             #if (sel_ind == 2) {
-             #  pos_map_temp <<- matrix(pos_map[-1,], 1, 2)
-             #}
+             if ((row_reg > 2) && (row_reg < dim(pos_map)[1])) {
+               pos_delta <- (pos_map[row_reg,2] - pos_map[row_reg,1] + 1)
+               pos_map_temp <- pos_map[-c(1:row_reg),] - pos_delta
+               pos_map <<- rbind(pos_map[1:(row_reg-1),], pos_map_temp)
+             }
 #
-             #else {
-             #  pos_map_temp <<- pos_map[-1,]
-             #}
-             #pos_map <<- (pos_map_temp - pos_delta)
-             #}
-#
-             #if (row_reg == 2) {
-             #  pos_delta <- (pos_map[2,2] - pos_map[2,1] + 1)
-             #  pos_map_temp <- pos_map[-c(1,2),] - pos_delta
-             #  pos_map <<- rbind(pos_map, pos_map_temp)
-             #}
-#
-             #if ((row_reg > 2) && (row_reg < dim(pos_map)[1])) {
-             #  pos_delta <- (pos_map[row_reg,2] - pos_map[row_reg,1] + 1)
-             #  pos_map_temp <- pos_map[-c(1:row_reg),] - pos_delta
-             #  pos_map <<- rbind(pos_map[1:(row_reg-1),], pos_map_temp)
-             #}
-#
-             #if (row_reg == dim(pos_map)[1]) {
-             #  pos_map <<- pos_map[-dim(pos_map)[1],]
-             #}
+             if (row_reg == dim(pos_map)[1]) {
+               pos_map <<- pos_map[-dim(pos_map)[1],]
+             }
              sel_ind <<- sel_ind - 1
            }
          alr_click <<- 0

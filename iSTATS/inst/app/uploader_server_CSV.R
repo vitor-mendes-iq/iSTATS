@@ -108,7 +108,7 @@ observeEvent(input$file_regions, {
   reg_selec_old <<- dataset
   #regions_sel <<- t(dataset)
   old_sel <<- 1
-  sel_ind <<- 1
+  sel_ind <<- 0
 })
 
 # import botton

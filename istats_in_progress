@@ -4,5 +4,6 @@ olhar a logica do pos_map
 # atualmente travado na logica do pos_map (resolvido)
 # Atualmente travado no "cut_all"(resolvido) 
 # entender a logica dos if da linha 531 -560
-e o pq não atualiza a exclucao de colunas no plot
+e o pq não atualiza a exclucao de colunas no plot(resovido)
+# ajustes finos no codigo: prints, nomes de variáveis, testar sobrepossiçao de seleções, fazer imagem do botão de salvar seleções, tratar warning in matrix
 
