@@ -165,7 +165,7 @@
        
        downloadButton("downloadpoints_save", icon("sakod"),
                       class = "btn shiny-download-link",
-                      tags$img(src = "download_points.png",
+                      tags$img(src = "save_selected.png",
                                height = "35px", width = "40px")),
        bsTooltip("downloadpoints", "Download selected points",
                  "right", options = list(container = "body"))
