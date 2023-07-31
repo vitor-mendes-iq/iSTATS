@@ -106,14 +106,37 @@ observeEvent(input$file_regions, {
   data_path_regions <- input$file_regions
   dataset <- read.csv(data_path_regions$datapath, header = FALSE)
   reg_selec_old <<- dataset
-  #regions_sel <<- t(dataset)
-  old_sel <<- 1
   sel_ind <<- 0
+  old_sel <<-  1
+  
 })
 
 # import botton
 observeEvent(input$import, {
   updateTabsetPanel(session, "main_bar", "Plot Spectra")
+  if(old_sel == 1) {
+    reg_selec <<- as.matrix(reg_selec_old)
+    pos_map <<- matrix(data = NA,nrow=1,ncol = 2)
+    matr_selec <<- matrix(data = NA,dim(NMRData)[1],ncol = 1) 
+    for (i in 1:dim(reg_selec)[1]) {
+      hlim <- which(abs(CS_values_real[1,]-reg_selec_old[i,1])==min(abs(CS_values_real[1,]-reg_selec_old[i,1])))
+      llim <- which(abs(CS_values_real[1,]-reg_selec_old[i,2])==min(abs(CS_values_real[1,]-reg_selec_old[i,2])))
+      col_select_old <<- c(col_select_old, seq(llim, hlim, 1))
+      pos_low <- which(col_select_old==llim)
+      pos_high <- which(col_select_old==hlim)
+      pos_map <<- rbind(pos_map, matrix(c(pos_low,pos_high), 1, 2))
+      matr_selec <<- cbind(matr_selec,rowSums(matrix(data = NMRData[,llim:hlim],dim(NMRData)[1], length(seq(llim, hlim, 1)))))
+      sel_ind <<- sel_ind + 1
+    }
+    pos_map <<- pos_map[-c(1),]
+    matr_selec <<- matr_selec[,-c(1)]
+    col_select <<- col_select_old
+    CS_selection$vranges <<- CS_values_real[1,col_select]
+    old_sel <<- 0
+  }
+  else{
+    col_select_old <<- c()
+  }
 })
 
 # UI

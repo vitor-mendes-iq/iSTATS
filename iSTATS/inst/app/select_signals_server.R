@@ -48,7 +48,7 @@
                         axis.title = ggplot2::element_text(face = "bold", color = "#000000", size = 15)
           ) +
         ggplot2::labs(x = "Chemical Shift", y = "Intensity") +
-        ggplot2::geom_vline(xintercept=CS_selection$vranges_t, color = "red", size = 0.1, alpha=0.01)
+        ggplot2::geom_vline(xintercept=CS_selection$vranges, color = "red", size = 0.1, alpha=0.01)
   })
 
   # Plot right
@@ -370,41 +370,16 @@
   # Select regions
   observeEvent(input$sel_cor, {
       brush <- input$sel_brush
-      if(old_sel == 1) {
-        reg_selec <<- as.matrix(reg_selec_old)
-        pos_map <<- matrix(data = NA,nrow=1,ncol = 2)
-        for (i in 1:dim(reg_selec)[1]) {
-          print(i)
-          hlim <- which(abs(CS_values_real[1,]-reg_selec_old[i,1])==min(abs(CS_values_real[1,]-reg_selec_old[i,1])))
-          llim <- which(abs(CS_values_real[1,]-reg_selec_old[i,2])==min(abs(CS_values_real[1,]-reg_selec_old[i,2])))
-          col_select_old <<- c(col_select_old, seq(llim, hlim, 1))
-          pos_low <- which(col_select_old==llim)
-          pos_high <- which(col_select_old==hlim)
-          pos_map <<- rbind(pos_map, matrix(c(pos_low,pos_high), 1, 2))
-          sel_ind <<- sel_ind + 1
-        }
-        pos_map <<- pos_map[-c(1),]
-        col_select <<- col_select_old
-        CS_selection$vranges_t <<- CS_values_real[1,col_select]
-        print(pos_map)
-        matr_selec <<- rowSums(matrix(data = NMRData[,llim:hlim],dim(NMRData)[1], length(CS_selection$vranges_t)))
-        old_sel <<- 0
-      }
-      else{
-        col_select_old <<- c()
-      }
-
       if (!is.null(brush)) {
 
         if (sel_ind == 0) {
           sel_ind <<- 1
-          CS_selection$vranges_t <<- c()
+          CS_selection$vranges <<- c()
           hlim <- which(abs(CS_values_real[1,]-brush$xmin)==min(abs(CS_values_real[1,]-brush$xmin)))
           llim <- which(abs(CS_values_real[1,]-brush$xmax)==min(abs(CS_values_real[1,]-brush$xmax)))
           col_select <<- c(seq(llim, hlim, 1),col_select_old)
-          #print(col_select)
-          CS_selection$vranges_t <<- CS_values_real[1,col_select]
-          matr_selec <<- rowSums(matrix(data = NMRData[,llim:hlim],dim(NMRData)[1], length(CS_selection$vranges_t)))
+          CS_selection$vranges <<- CS_values_real[1,col_select]
+          matr_selec <<- rowSums(matrix(data = NMRData[,llim:hlim],dim(NMRData)[1], length(col_select)))
           reg_selec <<- matrix(data = c(brush$xmin,brush$xmax), 1, 2)
           pos_map <<- matrix(c(1,length(col_select)), 1, 2)
           
@@ -447,16 +422,10 @@
             pos_low <- which(col_select==llim)
             pos_high <- which(col_select==hlim)
             pos_map <<- rbind(pos_map, matrix(c(pos_low,pos_high), 1, 2))
-            #beg_ind <- pos_map[(dim(reg_selec)[1]),2]
-            #act_map <- c((beg_ind+1),(beg_ind+length(col_select_2)))
-            #pos_map <<- rbind(pos_map,act_map)
-            print(pos_map)
             dyn_brush <- c(brush$xmin,brush$xmax)
-            #reg_selec <<- rbind(reg_selec, dyn_brush)
-            print('reg_selec')
-            print(reg_selec)
-            CS_selection$vranges_t <<- c(CS_selection$vranges_t, CS_values_real[1,col_select])
-            matr_selec <<- cbind(matr_selec,rowSums(matrix(data = NMRData[,llim:hlim],dim(NMRData)[1], length(col_select))))
+            CS_selection$vranges <<- c(CS_selection$vranges, CS_values_real[1,col_select])
+            matr_selec <<- cbind(matr_selec,rowSums(matrix(data = NMRData[,llim:hlim],dim(NMRData)[1], length(col_select_2))))
+            print(matr_selec)
           }
 
           else {
@@ -490,11 +459,10 @@
          print(exc_val)
 
          if (dim(reg_selec)[1] == 1) {
-            print('passei')
            if ((exc_val >= reg_selec[1,1]) && (exc_val <= reg_selec[1,2])) {
              reg_selec <<- matrix (0, 1, 2)
              col_select <<- c()
-             CS_selection$vranges_t <<- c(-13131313,-131313)
+             CS_selection$vranges <<- c(-13131313,-131313)
              sel_ind <<- 0
            }
         }
@@ -514,7 +482,6 @@
              b_point <- pos_map[row_reg,1]
              e_point <- pos_map[row_reg,2]
              cut_all <- seq(b_point, e_point, 1)
-             print(cut_all)
 
             if (sel_ind == 2) {
                reg_selec <<- matrix(reg_selec[-row_reg,], 1, 2)
@@ -523,11 +490,9 @@
              else {
              reg_selec <<- reg_selec[-row_reg,]
              }
+             
              col_select <<- col_select[-c(cut_all)]
-             print(length(CS_selection$vranges_t))
-             CS_selection$vranges_t <<- CS_values_real[1,col_select]
-             #CS_selection$vranges_t <<- CS_selection$vranges_t[-c(cut_all)]
-             print(length(CS_selection$vranges_t))  
+             CS_selection$vranges <<- CS_values_real[1,col_select]
              if (row_reg == 1) {
              pos_delta <<- as.integer(pos_map[1,2] - pos_map[1,1] + 1)
 
@@ -546,13 +511,13 @@
                pos_map_temp <- pos_map[-c(1,2),] - pos_delta
                pos_map <<- rbind(pos_map, pos_map_temp)
              }
-#
+
              if ((row_reg > 2) && (row_reg < dim(pos_map)[1])) {
                pos_delta <- (pos_map[row_reg,2] - pos_map[row_reg,1] + 1)
                pos_map_temp <- pos_map[-c(1:row_reg),] - pos_delta
                pos_map <<- rbind(pos_map[1:(row_reg-1),], pos_map_temp)
              }
-#
+
              if (row_reg == dim(pos_map)[1]) {
                pos_map <<- pos_map[-dim(pos_map)[1],]
              }
