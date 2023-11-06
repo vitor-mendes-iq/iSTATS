@@ -1,5 +1,5 @@
 regions_sel <<-c()
-
+old_sel <<-  0
 observeEvent(input$file2, {
 
   buma <<- 0
