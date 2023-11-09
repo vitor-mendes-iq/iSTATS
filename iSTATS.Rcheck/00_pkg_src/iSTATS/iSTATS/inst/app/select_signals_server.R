@@ -306,7 +306,7 @@
       if (!(sel_ind == 0)) {
         col_select <<- col_select[order(col_select)]
         CS_sel_real <<- CS_selection$vranges[order(CS_selection$vranges,decreasing = TRUE)]
-        matr_cor <<- matrix(data = NMRData[,col_select],dim(NMRData)[1], length(col_select))
+        matr_cor <<- matrix(data = NMRData[,col_select],dim(NMRData)[1], length(CS_sel_real))
         cor_pearson <<- cor(matr_cor[,])
         drv_pk <<- which.max(matr_cor[1,])
         rr <<- vector(mode="character")

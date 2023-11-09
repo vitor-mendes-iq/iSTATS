@@ -37,7 +37,61 @@ observeEvent(input$file2, {
     }
 
 
-    
+    lslim = as.numeric(input$ls_lims)
+    hslim = as.numeric(input$hs_lims)
+
+    file_names_full <<- up2$name
+
+    file_names <<- substr(basename(file_names_full),1, nchar(basename(file_names_full))-4)
+    #file_names <<- file_names_full
+
+    file_names_full <<- gtools::mixedsort(file_names_full)
+
+    file_names <<- gtools::mixedsort(file_names)
+
+    # upfile1 <<- lapply(upfile1, function(k) if(anyNA(k)) k[-1,c(4,2)] else k[,c(4,2)])
+
+    list_len <- length(upfile1)
+
+    CS_values <<- unlist((upfile1[[1]][1]),use.names = FALSE, recursive = FALSE)
+
+    NMRData_temp <<- t(lapply(upfile1, function(k) k[,2]))
+
+    hspoint <- which(abs(CS_values-lslim)==min(abs(CS_values-lslim)))[1]
+
+    lspoint <- which(abs(CS_values-hslim)==min(abs(CS_values-hslim)))[1]
+
+    npf = hspoint - lspoint
+
+    np = npf + 1
+
+    CS_values_temp <- lapply(upfile1, function(k) k[,1])
+
+    hspoint <- sapply(CS_values_temp, function (v) which(abs(v-lslim)==min(abs(v-lslim)))[1])
+
+    CS_ind <- which.min(abs(mapply(function(x,y) x[hspoint[y]],CS_values_temp, 1:list_len)))
+
+    CS_values <<- CS_values_temp[[CS_ind]][(hspoint[CS_ind]-npf):hspoint[CS_ind]]
+
+    NMRData <<- t(mapply(function(x,y) x[(hspoint[y]-npf):hspoint[y]],NMRData_temp, 1:list_len))
+
+    CS_values_real <<- rbind(CS_values,CS_values)
+
+    NMRData_plot <<- NMRData
+
+    NMRData <<- NMRData + abs(min(NMRData))
+
+
+    refreshval()
+
+    updateSelectInput(session, "spectrum_list_multi", choices = file_names[])
+
+    updateSelectInput(session, "spectrum_list_stocsy_i", choices = file_names[])
+
+    updateSelectInput(session, "spectrum_list_stocsy_is", choices = file_names[])
+
+    updateSelectInput(session, "spectrum_list_stocsy_rt", choices = file_names[])
+
     #updateTabsetPanel(session, "main_bar", "Plot Spectra")
 
   }
@@ -56,36 +110,6 @@ observeEvent(input$file_regions, {
 
 # import botton
 observeEvent(input$import, {
-  
-  lslim = as.numeric(input$ls_lims)
-  hslim = as.numeric(input$hs_lims)
-  
-  file_names_full <<- up2$name
-  file_names <<- substr(basename(file_names_full),1, nchar(basename(file_names_full))-4)
-  file_names_full <<- gtools::mixedsort(file_names_full)
-  file_names <<- gtools::mixedsort(file_names)
-  list_len <- length(upfile1)
-  CS_values <<- unlist((upfile1[[1]][1]),use.names = FALSE, recursive = FALSE)
-  NMRData_temp <<- t(lapply(upfile1, function(k) k[,2]))
-  hspoint <- which(abs(CS_values-lslim)==min(abs(CS_values-lslim)))[1]
-  lspoint <- which(abs(CS_values-hslim)==min(abs(CS_values-hslim)))[1]
-  npf = hspoint - lspoint
-  np = npf + 1
-  CS_values_temp <- lapply(upfile1, function(k) k[,1])
-  hspoint <- sapply(CS_values_temp, function (v) which(abs(v-lslim)==min(abs(v-lslim)))[1])
-  CS_ind <- which.min(abs(mapply(function(x,y) x[hspoint[y]],CS_values_temp, 1:list_len)))
-  CS_values <<- CS_values_temp[[CS_ind]][(hspoint[CS_ind]-npf):hspoint[CS_ind]]
-  NMRData <<- t(mapply(function(x,y) x[(hspoint[y]-npf):hspoint[y]],NMRData_temp, 1:list_len))
-  CS_values_real <<- rbind(CS_values,CS_values)
-  NMRData_plot <<- NMRData
-  NMRData <<- NMRData + abs(min(NMRData))
-  
-  refreshval()
-  
-  updateSelectInput(session, "spectrum_list_multi", choices = file_names[])
-  updateSelectInput(session, "spectrum_list_stocsy_i", choices = file_names[])
-  updateSelectInput(session, "spectrum_list_stocsy_is", choices = file_names[])
-  updateSelectInput(session, "spectrum_list_stocsy_rt", choices = file_names[])
   updateTabsetPanel(session, "main_bar", "Plot Spectra")
   if(old_sel == 1) {
     reg_selec <<- as.matrix(reg_selec_old)

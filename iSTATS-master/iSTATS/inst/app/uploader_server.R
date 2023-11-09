@@ -31,9 +31,11 @@ observeEvent(input$file1, {
     file_names_full <<- gtools::mixedsort(file_names_full)
     file_names <<- gtools::mixedsort(file_names)
     upfile <<- lapply(upfile, function(k) if(anyNA(k)) k[-1,c(4,2)] else k[,c(4,2)])
+    #upfile_ <<- lapply(upfile, function(k) if(anyNA(k)) k[-1,c(4,2)] else k[,c(4,2)])
     list_len <- length(upfile)
     CS_values <<- unlist((upfile[[1]][1]),use.names = FALSE, recursive = FALSE)
-    NMRData_temp <<- t(lapply(upfile, function(k) k[,2]))
+    print(upfile[[1]][2])
+    NMRData_temp <<- t(mapply(upfile, function(k) k[,2]))
     hspoint <- which(abs(CS_values-lslim)==min(abs(CS_values-lslim)))[1]
     lspoint <- which(abs(CS_values-hslim)==min(abs(CS_values-hslim)))[1]
     npf = hspoint - lspoint
@@ -45,8 +47,8 @@ observeEvent(input$file1, {
     NMRData <<- t(mapply(function(x,y) x[(hspoint[y]-npf):hspoint[y]],NMRData_temp, 1:list_len))
     CS_values_real <<- rbind(CS_values,CS_values)
     NMRData_plot <<- NMRData
-    NMRData <<- NMRData + abs(min(NMRData))
-
+    NMRData <<- NMRData_temp + abs(min(NMRData_temp))
+   
     refreshval()
     updateSelectInput(session, "spectrum_list_multi", choices = file_names[])
     updateSelectInput(session, "spectrum_list_stocsy_i", choices = file_names[])

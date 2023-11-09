@@ -1,0 +1,142 @@
+
+.btn {
+  color: #000000;
+  font-weight: bold;
+  background-color: transparent;
+  background-image: none;
+  border-color: #1E90FF;
+
+}
+
+.btn:hover {
+  color: #FFFFFF;
+  font-weight: bold;
+  background-color: #1E90FF;
+  border-color: #1E90FF;
+}
+
+.btn:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+}
+
+
+.btn_t {
+  color: #000000;
+  font-weight: bold;
+  background-color: transparent;
+  background-image: none;
+  border-color: #1E90FF;
+}
+
+.btn_t:hover {
+  color: #FFFFFF;
+  font-weight: bold;
+  background-color: #1E90FF;
+  border-color: #1E90FF;
+}
+
+.btn_t:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+}
+
+
+
+.btn_l {
+
+  margin-left: 10px;
+  margin-right: 2px;
+  color: #000000;
+  font-weight: bold;
+  background-color: transparent;
+  background-image: none;
+  border-color: #1E90FF;
+}
+
+.btn_l:hover {
+  color: #FFFFFF;
+  font-weight: bold;
+  background-color: #1E90FF;
+  border-color: #1E90FF;
+}
+
+.btn_l:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+}
+
+
+
+.btn_lmax {
+
+  margin-left: 0px;
+  margin-right: 2px;
+  color: #000000;
+  font-weight: bold;
+  background-color: transparent;
+  background-image: none;
+  border-color: #1E90FF;
+}
+
+.btn_lmax:hover {
+  color:#FFFFFF;
+  font-weight: bold;
+  background-color: #1E90FF;
+  border-color: #1E90FF;
+}
+
+.btn_lmax:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+}
+
+
+
+.btn_r {
+
+  margin-left: 2px;
+  margin-right: 10px;
+  color:#000000;
+  font-weight: bold;
+  background-color: transparent;
+  background-image: none;
+  border-color: #1E90FF;
+}
+
+.btn_r:hover {
+  color:#FFFFFF;
+  font-weight: bold;
+  background-color: #1E90FF;
+  border-color: #1E90FF;
+}
+
+.btn_r:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+}
+
+
+
+.btn_rmax {
+
+  margin-left: 2px;
+
+  color: #000000;
+  font-weight: bold;
+  background-color: transparent;
+  background-image: none;
+  border-color: #1E90FF;
+}
+
+.btn_rmax:hover {
+  color: #FFFFFF;
+  font-weight: bold;
+  background-color: #1E90FF;
+  border-color: #1E90FF;
+}
+
+.btn_rmax:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.5);
+}

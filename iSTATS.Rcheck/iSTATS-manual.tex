@@ -1,0 +1,34 @@
+\nonstopmode{}
+\documentclass[letterpaper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `iSTATS'}}
+\par\bigskip{\large \today}
+\end{center}
+\inputencoding{utf8}
+\ifthenelse{\boolean{Rd@use@hyper}}{\hypersetup{pdftitle = {iSTATS: A Graphical Interface to Perform STOCSY Analyses on NMR Data}}}{}\begin{description}
+\raggedright{}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{A Graphical Interface to Perform STOCSY Analyses on NMR Data}
+\item[Version]\AsIs{1.6}
+\item[Date]\AsIs{2023-07-31}
+\item[Author]\AsIs{Luiz Henrique Keng Queiroz Junior[aut,cre], Vitor Mendes de Oliveira [aut]}
+\item[Maintainer]\AsIs{Luiz Henrique Keng Queiroz Junior }\email{keng@ufg.br}\AsIs{}
+\item[Description]\AsIs{Launches a 'shiny' based application for Nuclear Magnetic Resonance (NMR) data importation and Statistical TOtal Correlation SpectroscopY (STOCSY) analyses in a full interactive approach. The theoretical background and applications of STOCSY method could be found at Cloarec, O., Dumas, M. E., Craig, A., Barton, R. H., Trygg, J., Hudson, J., Blancher, C., Gauguier, D., Lindon, J. C., Holmes, E. & Nicholson, J. (2005) <}\Rhref{https://doi.org/10.1021/ac048630x}{doi:10.1021/ac048630x}\AsIs{>.}
+\item[Depends]\AsIs{R(>= 3.0)}
+\item[Imports]\AsIs{Cairo(>= 1.5), ggplot2(>= 3.0.0), gtools(>= 3.8.1), shiny(>=
+1.0.2), shinyBS(>= 0.61), shinyWidgets(>= 0.4.3)}
+\item[License]\AsIs{GPL-3}
+\item[Encoding]\AsIs{UTF-8}
+\item[RoxygenNote]\AsIs{6.1.1}
+\item[NeedsCompilation]\AsIs{no}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\printindex{}
+\end{document}
