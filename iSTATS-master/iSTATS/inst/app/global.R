@@ -19,7 +19,7 @@ onStop(function() {
                   "NMR_Pareto","NMR_MC","NMR_log","NMR_i_sqr","NMR_ASC","matr_cor","s_stoc","rr2",
                   "rowns_temp","dif","cor_cutoff_value_p","cor_cutoff_value_n","col_sel_norm",
                   "test_norm","R_CRITICAL","rr_n","CS_norm","CS_selection","gg","gr","buma","CS_values_real",
-                  "NMRData","NMRData_temp", "facts","facts_is","facts_rt","Scaling_cor", "up2", "upfile1", "up","up3",
+                  "NMRData","NMRData_temp", "facts","facts_is","facts_rt","Scaling_cor", "up2", "up","up3",
                   "testy","testy_multi","testy_stocsy_i","alr_click","upfile3",
                   "chkzoom","chkzoom_multi","chkzoom_stocsy_i","chkzoom_stocsy_is",
                   "chkzoom_stocsy_rt", "col_select","cor_cutoff","cor_cutoff_i",
