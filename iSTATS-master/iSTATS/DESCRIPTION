@@ -1,8 +1,8 @@
 Package: iSTATS
 Type: Package
 Title: A Graphical Interface to Perform STOCSY Analyses on NMR Data
-Version: 1.6
-Date: 2023-08-11
+Version: 1.7
+Date: 2023-12-05
 Author: Luiz Henrique Keng Queiroz Junior[aut,cre], Vitor Mendes de Oliveira [aut] 
 Maintainer: Luiz Henrique Keng Queiroz Junior <keng@ufg.br>
 Description: Launches a 'shiny' based application for Nuclear Magnetic Resonance (NMR)data importation and Statistical TOtal Correlation SpectroscopY (STOCSY) analyses in a full interactive approach. The theoretical background and applications of STOCSY method could be found at Cloarec, O., Dumas, M. E., Craig, A., Barton, R. H., Trygg, J., Hudson, J., Blancher, C., Gauguier, D., Lindon, J. C., Holmes, E. & Nicholson, J. (2005) <doi:10.1021/ac048630x>.
@@ -14,5 +14,5 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2023-08-11 12:30:31 UTC; User
+Packaged: 2023-12-05 16:30:30 UTC; User
 License: GPL (>= 3)

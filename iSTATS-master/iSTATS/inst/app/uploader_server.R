@@ -1,12 +1,10 @@
-library(bit64)
-
 # Import and build matrix
 observeEvent(input$file1, {
   buma <<- 0
-
+  
   if(is.null(input$file1))  return(NULL)
   up <<-input$file1
-
+  
   if (length(up$name) < 2) {
     showModal(modalDialog(
       title = "Warning!!!",
@@ -17,55 +15,38 @@ observeEvent(input$file1, {
     ))
     buma <<- 1
   }
-
+  
   else {
     upfile <<-list()
     
-
     for(l in 1:length(up$name)) {
       upfile[[l]] <<- data.table::fread(up$datapath[l],
-                            header = FALSE, sep = ",",data.table=FALSE)
+                                        header = FALSE, sep = ",",data.table=FALSE)
     }
-
+    
     lslim = as.numeric(input$ls_lims)
     hslim = as.numeric(input$hs_lims)
     file_names_full <<- up$name
     file_names <<- substr(basename(file_names_full),1, nchar(basename(file_names_full))-4)
     file_names_full <<- gtools::mixedsort(file_names_full)
     file_names <<- gtools::mixedsort(file_names)
-   
     upfile <<- lapply(upfile, function(k) if(anyNA(k)) k[-1,c(4,2)] else k[,c(4,2)])
-    upfile_ <<- upfile
     list_len <- length(upfile)
-    for (i in seq_along(upfile)) {
-      upfile_[[i]][2] <<- lapply(upfile[[i]][2], function(value) {
-        as.integer(as.integer64(value))
-      })
-    }
-    # Extrair a segunda coluna de cada data frame e converter para matriz
-    NMRData_temp <<- t(do.call(cbind, lapply(upfile, function(df) unlist(df[[2]]))))
-    
-    #print(NMRData_temp)
     CS_values <<- unlist((upfile[[1]][1]),use.names = FALSE, recursive = FALSE)
-    #NMRData_temp <<- t(lapply(upfile_, function(k) k[,2]))
+    NMRData_temp <<- t(lapply(upfile, function(k) as.numeric(k[,2])))
     hspoint <- which(abs(CS_values-lslim)==min(abs(CS_values-lslim)))[1]
     lspoint <- which(abs(CS_values-hslim)==min(abs(CS_values-hslim)))[1]
-    
     npf = hspoint - lspoint
     np = npf + 1
-    CS_values_temp <- lapply(upfile_, function(k) k[,1])
-    
+    CS_values_temp <- lapply(upfile, function(k) k[,1])
     hspoint <- sapply(CS_values_temp, function (v) which(abs(v-lslim)==min(abs(v-lslim)))[1])
-    print(hspoint)
     CS_ind <- which.min(abs(mapply(function(x,y) x[hspoint[y]],CS_values_temp, 1:list_len)))
     CS_values <<- CS_values_temp[[CS_ind]][(hspoint[CS_ind]-npf):hspoint[CS_ind]]
     NMRData <<- t(mapply(function(x,y) x[(hspoint[y]-npf):hspoint[y]],NMRData_temp, 1:list_len))
-    print('vitu')
-    print(NMRData)
     CS_values_real <<- rbind(CS_values,CS_values)
     NMRData_plot <<- NMRData
     NMRData <<- NMRData + abs(min(NMRData))
-   
+    
     refreshval()
     updateSelectInput(session, "spectrum_list_multi", choices = file_names[])
     updateSelectInput(session, "spectrum_list_stocsy_i", choices = file_names[])
@@ -95,7 +76,7 @@ output$imputa <- renderUI({
                                         textInput("ls_lims", "min","0.0",
                                                   width = "150px")
                                  ),
-
+                                 
                                  column(1, align="center",
                                         textInput("hs_lims", "max","10.0", width = "150px")
                                  ),
