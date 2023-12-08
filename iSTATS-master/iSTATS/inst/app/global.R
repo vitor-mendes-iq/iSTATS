@@ -31,7 +31,7 @@ onStop(function() {
                   "pos_map","reg_selec","up","col_select_2","CS_sel_real",
                   "CS_values","drv_pk","file_names_full","file_names_full",
                   "peran_sel","s_ind","z","das_multi","das_stocsy_i","das_stocsy_is",
-                  "das_stocsy_rt","drv_pk_ois","drv_pk_oi","drv_pk_ort","s","tryton")
+                  "das_stocsy_rt","drv_pk_ois","drv_pk_oi","drv_pk_ort","s","tryton", "old_sel", "regions_sel")
 
 suppressWarnings(
   suppressMessages({
